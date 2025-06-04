@@ -7,3 +7,5 @@ pip install -U django-jazzmin
 pip install fpdf
 cd LIMS
 python manage.py runserver
+#Use admin
+http://127.0.0.1:8000/admin/
