@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate PDF Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      padding: 50px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form p {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #00796b;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #b2dfdb;
+      border-radius: 6px;
+      background: #f0fdfa;
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(to right, #00acc1, #43a047);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(to right, #43a047, #00acc1);
+    }
+  </style>
+</head>
+<body>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <!-- Preserve Django admin action context -->
+    <input type="hidden" name="action" value="print_pdf_report" />
+    {% for obj in queryset %}
+      <input type="hidden" name="_selected_action" value="{{ obj.pk }}">
+    {% endfor %}
+
+    <input type="submit" name="apply" value="Generate PDF" class="default" />
+  </form>
+
+</body>
+</html>

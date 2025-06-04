@@ -1,0 +1,69 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dyZtMtx1YvYbLb3uqe7EoPQ9VpE7gG5AxXbF2QeYyN6QKly4w0TkDxKo3OhdP+/mcJNKk8bGzZxgXhxDVEXyQg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 per row */
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .model-card {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  .model-card:active {
+    transform: scale(0.97) translateY(2px); /* move slightly */
+  }
+
+  .model-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>{{ site_title }}</h1>
+<div class="app-grid">
+    {% for app in app_list %}
+        {% for model in app.models %}
+        <div class="model-card" onclick="location.href='{{ model.admin_url }}'">
+            <div class="model-title">
+
+              <i class="{% if model.object_name == 'Client' %}fas fa-user-injured
+                {% elif model.object_name == 'Category' %}fas fa-tags
+                {% elif model.object_name == 'SampleType' %}fas fa-vial
+                {% elif model.object_name == 'Lot' %}fas fa-boxes
+                {% elif model.object_name == 'StorageLocation' %}fas fa-warehouse
+                {% elif model.object_name == 'Shelf' %}fas fa-layer-group
+                {% elif model.object_name == 'Localisation' %}fas fa-map-marker-alt
+                {% elif model.object_name == 'Sample' %}fas fa-flask
+                {% elif model.object_name == 'Manufacturer' %}fas fa-industry
+                {% elif model.object_name == 'Modele' %}fas fa-cogs
+                {% elif model.object_name == 'Equipment' %}fas fa-microscope
+                {% elif model.object_name == 'Methodology' %}fas fa-project-diagram
+                {% elif model.object_name == 'MethodologyRequirement' %}fas fa-tasks
+                {% elif model.object_name == 'Analyse' %}fas fa-notes-medical
+                {% elif model.object_name == 'Result' %}fas fa-vials
+                {% elif model.object_name == 'Report' %}fas fa-file-medical
+                {% else %}fas fa-database{% endif %}">
+              </i>
+
+ {{ model.name }}
+            </div>
+            <a href="{{ model.admin_url }}" style="margin-right:10px;">📝 Modifier</a>
+            <a href="{{ model.add_url }}">➕ Ajouter</a>
+        </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endblock %}
