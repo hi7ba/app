@@ -3,6 +3,7 @@ cd app
 #Create and activate a virtual environment
 python -m venv env
 env\Scripts\activate
- pip install -U django-jazzmin
- pip install fpdf
+pip install -U django-jazzmin
+pip install fpdf
+cd LIMS
 python manage.py runserver
